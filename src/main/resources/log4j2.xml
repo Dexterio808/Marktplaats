@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <property name="logpattern">%highlight{[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n}{FATAL=red
+            blink, ERROR=red, WARN=yellow bold, INFO=WHITE, DEBUG=green bold, TRACE=blue}
+        </property>
+    </Properties>
+
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout disableAnsi="false" pattern="${logpattern}"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <!-- default -->
+        <Root level="INFO">
+            <AppenderRef ref="console"/>
+        </Root>
+        <!-- for everything from nl.belastingdienst -->
+        <Logger name="nl.belastingdienst" level="DEBUG"/>
+
+        <Logger name="org.hibernate" level="WARN"/>
+        <Logger name="org.hibernate.type.descriptor.sql" level="INFO"/>
+    </Loggers>
+</Configuration>
