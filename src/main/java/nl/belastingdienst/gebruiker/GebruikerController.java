@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class GebruikerController implements ControllerBP<Gebruiker> {
+
     @Inject
     private GebruikerService gebruikerService;
 

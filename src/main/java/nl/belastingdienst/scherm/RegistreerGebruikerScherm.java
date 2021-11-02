@@ -6,10 +6,7 @@ import nl.belastingdienst.gebruiker.Gebruiker;
 import nl.belastingdienst.gebruiker.GebruikerController;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,7 +31,7 @@ public class RegistreerGebruikerScherm {
             System.out.println("0. Terug naar hoofdmenu");
             System.out.println("1. Nieuwe gebruiker registreren");
 
-            int keuze = scanner.nextInt();
+            int keuze = Integer.parseInt(scanner.nextLine());
             switch (keuze) {
                 case 0:
                     runRGS = false;
@@ -49,23 +46,27 @@ public class RegistreerGebruikerScherm {
     private void registratieProcedure() {
         String naam;
         String email;
-        List<Bezorgwijze> gebruikerBezorgwijzen;
+        Set<Bezorgwijze> gebruikerBezorgwijzen;
         Adres adres;
 
         System.out.println("Nieuwe Gebruiker aanmaken");
-        System.out.print("naam: ");
-        naam = scanner.nextLine();
+        naam = getValidName();
         System.out.println();
         email = getValidEmail();
         System.out.println();
         gebruikerBezorgwijzen = getBezorgwijzeFromInput();
 
-        if (thuisbezorgdIsChosen(gebruikerBezorgwijzen)) {
+        if (gebruikerBezorgwijzen.contains(Bezorgwijze.THUIS)) {
             adres = getAdresFromUser();
         } else {
             adres = adresMenu();
         }
-        gebruikerController.save(new Gebruiker(naam, email, adres, gebruikerBezorgwijzen));
+        gebruikerController.save(new Gebruiker(naam, email, adres, (Set<Bezorgwijze>) gebruikerBezorgwijzen));
+    }
+
+    private String getValidName() {
+        System.out.println("naam: ");
+        return scanner.nextLine();
     }
 
     private Adres adresMenu() {
@@ -90,7 +91,7 @@ public class RegistreerGebruikerScherm {
         System.out.println("Straat: ");
         String straat = scanner.nextLine();
         System.out.println("Huisnummer: ");
-        int huisnummer = Integer.parseInt(scanner.nextLine());
+        String  huisnummer = scanner.nextLine();
         System.out.println("Postcode: ");
         String postcode = scanner.nextLine();
         System.out.println("Stad: ");
@@ -98,17 +99,7 @@ public class RegistreerGebruikerScherm {
         return new Adres(straat, huisnummer, postcode, stad);
     }
 
-    private boolean thuisbezorgdIsChosen(List<Bezorgwijze> bezorgwijzes) {
-        boolean thuisbezorgd = false;
-        for (int i = 0; i < bezorgwijzes.size(); i++) {
-            if (bezorgwijzes.get(i).equals(Bezorgwijze.THUIS)){
-                thuisbezorgd = true;
-            }
-        }
-        return thuisbezorgd;
-    }
-
-    private List<Bezorgwijze> getBezorgwijzeFromInput() {
+    private Set<Bezorgwijze> getBezorgwijzeFromInput() {
         List<Bezorgwijze> getBezorgwijzen = new ArrayList<>();
         System.out.println("Selecteer bezorgwijze: ");
         displayBezorgwijze();
@@ -118,9 +109,9 @@ public class RegistreerGebruikerScherm {
         return getListOfBezorgwijze(extractBezorgKeuzeIndexes(keuze));
     }
 
-    private List<Bezorgwijze> getListOfBezorgwijze(List<Integer> keuzes) {
+    private Set<Bezorgwijze> getListOfBezorgwijze(List<Integer> keuzes) {
         List<Bezorgwijze> bezorgEnums = Arrays.asList(Bezorgwijze.values());
-        List<Bezorgwijze> gekozenEnums = new ArrayList<>();
+        Set<Bezorgwijze> gekozenEnums  = new HashSet<>();
         for (int i = 0; i < keuzes.size(); i++) {
             gekozenEnums.add(bezorgEnums.get(keuzes.get(i)));
         }

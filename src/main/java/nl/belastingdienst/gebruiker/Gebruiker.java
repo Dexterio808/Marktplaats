@@ -1,10 +1,7 @@
 package nl.belastingdienst.gebruiker;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import nl.belastingdienst.abstractbp.AbstractEntity;
 import nl.belastingdienst.bezorgwijze.Bezorgwijze;
 
@@ -12,7 +9,7 @@ import javax.persistence.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.List;
+import java.util.*;
 
 @Data
 @Builder
@@ -23,7 +20,7 @@ public class Gebruiker extends AbstractEntity {
 
     private String name;
 
-     @Column(unique = true) @NotNull
+    @Column(unique = true) @NotNull
     private String email;
 
     @Embedded
@@ -33,10 +30,10 @@ public class Gebruiker extends AbstractEntity {
     private String wachtwoord;
 
     @ElementCollection
-    private List<Bezorgwijze> bezorgwijzen;
+    private Set<Bezorgwijze> bezorgwijzen;
 
 
-    public Gebruiker(String name,  String email, Adres adres, List<Bezorgwijze> bezorgwijzen) {
+    public Gebruiker(String name,  String email, Adres adres, Set<Bezorgwijze> bezorgwijzen) {
         this.name = name;
         this.email = email;
         this.adres = adres;

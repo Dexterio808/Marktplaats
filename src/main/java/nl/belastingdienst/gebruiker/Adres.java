@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 @Data
 public class Adres {
     private String straat;
-    private int huisnummer;
+    private String huisnummer;
     private String postcode;
     private String stad;
 }
