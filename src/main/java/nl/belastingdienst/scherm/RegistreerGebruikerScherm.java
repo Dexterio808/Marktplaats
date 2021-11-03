@@ -6,31 +6,29 @@ import nl.belastingdienst.gebruiker.Gebruiker;
 import nl.belastingdienst.gebruiker.GebruikerController;
 
 import javax.inject.Inject;
-import java.security.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegistreerGebruikerScherm {
-    @Inject
-    private GebruikerController gebruikerController;
 
     Scanner scanner = new Scanner(System.in);
-
     Pattern mailPattern = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\." +
             "[a-zA-Z0-9_+&*-]+)*@" +
             "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
             "A-Z]{2,7}$");
-
     Pattern bezorgPattern = Pattern.compile("\\d+");
-
+    @Inject
+    private GebruikerController gebruikerController;
 
     public void run() {
         boolean runRGS = true;
         while (runRGS) {
             System.out.println("Registreer gebruiker Menu:");
-            System.out.println("0. Terug naar hoofdmenu");
-            System.out.println("1. Nieuwe gebruiker registreren");
+            System.out.println("_".repeat(15));
+            System.out.println("(1) - Nieuwe gebruiker registreren");
+            System.out.println("(x) - Terug naar hoofdmenu");
+            System.out.println("Keuze: ");
 
             int keuze = Integer.parseInt(scanner.nextLine());
             switch (keuze) {
@@ -65,16 +63,16 @@ public class RegistreerGebruikerScherm {
         gebruikerController.save(new Gebruiker(naam, email, adres, gebruikerBezorgwijzen));
     }
 
-    private String getValidName() {
+     String getValidName() {
         System.out.println("naam: ");
         return scanner.nextLine();
     }
 
-    private Adres adresMenu() {
+     Adres adresMenu() {
         Adres adres = null;
         System.out.println("Adres opgeven?");
         System.out.println("(y)yes/(n)no");
-        switch (scanner.nextLine().toLowerCase()){
+        switch (scanner.nextLine().toLowerCase()) {
             case "y":
                 adres = getAdresFromUser();
                 break;
@@ -89,11 +87,11 @@ public class RegistreerGebruikerScherm {
         return adres;
     }
 
-    private Adres getAdresFromUser() {
+     Adres getAdresFromUser() {
         System.out.println("Straat: ");
         String straat = scanner.nextLine();
         System.out.println("Huisnummer: ");
-        String  huisnummer = scanner.nextLine();
+        String huisnummer = scanner.nextLine();
         System.out.println("Postcode: ");
         String postcode = scanner.nextLine();
         System.out.println("Stad: ");
@@ -101,7 +99,7 @@ public class RegistreerGebruikerScherm {
         return new Adres(straat, huisnummer, postcode, stad);
     }
 
-    private Set<Bezorgwijze> getBezorgwijzeFromInput() {
+     Set<Bezorgwijze> getBezorgwijzeFromInput() {
         System.out.println("Selecteer bezorgwijze: ");
         displayBezorgwijze();
         System.out.println("Typ de nummers van de bezorgwijzen die toepasbaar zijn voor jou:");
@@ -110,23 +108,23 @@ public class RegistreerGebruikerScherm {
         return getListOfBezorgwijze(extractBezorgKeuzeIndexes(keuze));
     }
 
-    private Set<Bezorgwijze> getListOfBezorgwijze(List<Integer> keuzes) {
+     Set<Bezorgwijze> getListOfBezorgwijze(List<Integer> keuzes) {
         List<Bezorgwijze> bezorgEnums = Arrays.asList(Bezorgwijze.values());
-        Set<Bezorgwijze> gekozenEnums  = new HashSet<>();
+        Set<Bezorgwijze> gekozenEnums = new HashSet<>();
         for (Integer keuze : keuzes) {
             gekozenEnums.add(bezorgEnums.get(keuze));
         }
         return gekozenEnums;
     }
 
-    private void displayBezorgwijze() {
+     void displayBezorgwijze() {
         List<Bezorgwijze> displayEnums = Arrays.asList(Bezorgwijze.values());
         for (int i = 0; i < displayEnums.size(); i++) {
             System.out.println((i + 1) + ". " + displayEnums.get(i));
         }
     }
 
-    private List<Integer> extractBezorgKeuzeIndexes(String keuze) {
+     List<Integer> extractBezorgKeuzeIndexes(String keuze) {
         List<Integer> integers = new ArrayList<>();
         Matcher m = bezorgPattern.matcher(keuze);
         while (m.find()) {
@@ -135,7 +133,7 @@ public class RegistreerGebruikerScherm {
         return integers;
     }
 
-    private String getValidEmail() {
+     String getValidEmail() {
         System.out.println("Email: ");
         String mail = scanner.nextLine();
         Matcher mat = mailPattern.matcher(mail);

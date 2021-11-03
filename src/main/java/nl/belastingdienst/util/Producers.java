@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.io.*;
 import java.security.*;
+import java.util.Scanner;
 
 @Singleton
 public class Producers {
@@ -18,6 +19,11 @@ public class Producers {
     @Produces
     public static EntityManager em() {
         return Persistence.createEntityManagerFactory("MySQL").createEntityManager();
+    }
+
+    @Produces
+    public static Scanner sc(){
+        return new Scanner(System.in);
     }
 
     @Produces

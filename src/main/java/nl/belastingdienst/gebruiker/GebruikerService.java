@@ -19,8 +19,14 @@ public class GebruikerService implements ServiceBluePrint<Gebruiker> {
         return em.find(Gebruiker.class, id);
     }
 
+    public Gebruiker findByEmail(String email){
+        var query = em.createQuery("SELECT g FROM Gebruiker g WHERE g.email = :email", Gebruiker.class)
+                .setParameter("email", email);
+        return (Gebruiker) query.getSingleResult();
+    }
+
     @Override
-    public List<Gebruiker> getAll() {
+    public List<Gebruiker> findAll() {
         TypedQuery<Gebruiker> query = em.createQuery("SELECT g from Gebruiker g", Gebruiker.class);
         return query.getResultList();
     }

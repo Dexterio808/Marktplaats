@@ -1,14 +1,16 @@
 package nl.belastingdienst.sec;
 
-import lombok.extern.slf4j.*;
+import lombok.extern.slf4j.Slf4j;
 
-import java.nio.charset.*;
-import java.security.*;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 @Slf4j
 public class Password {
 
-    public static String createSalt(){
+    public static String createSalt() {
         byte[] salt = new byte[16];
         SecureRandom sr = new SecureRandom();
         StringBuilder sb = new StringBuilder();
@@ -23,7 +25,7 @@ public class Password {
         return hashPassword(salt, genPassword());
     }
 
-    public static String genPassword(){
+    public static String genPassword() {
         StringBuilder sb = new StringBuilder();
         SecureRandom sr = new SecureRandom();
 
@@ -32,6 +34,7 @@ public class Password {
             int randomCharIndex = sr.nextInt(chars.length());
             sb.append(chars.charAt(randomCharIndex));
         }
+        log.info(sb.toString());
         return sb.toString();
     }
 

@@ -13,7 +13,7 @@ public class GebruikerController implements ControllerBP<Gebruiker> {
 
     @Override
     public List<Gebruiker> findAll() {
-        return gebruikerService.getAll();
+        return gebruikerService.findAll();
     }
 
     @Override
