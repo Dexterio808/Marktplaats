@@ -1,16 +1,16 @@
 package nl.belastingdienst.gebruiker;
 
-import com.sun.istack.NotNull;
 import lombok.*;
+import lombok.extern.slf4j.*;
 import nl.belastingdienst.abstractbp.AbstractEntity;
 import nl.belastingdienst.bezorgwijze.Bezorgwijze;
+import nl.belastingdienst.sec.*;
 
 import javax.persistence.*;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.security.*;
 import java.util.*;
 
+@Slf4j
 @Data
 @Builder
 @NoArgsConstructor
@@ -20,23 +20,34 @@ public class Gebruiker extends AbstractEntity {
 
     private String name;
 
-    @Column(unique = true) @NotNull
+    @Column(unique = true)
     private String email;
 
     @Embedded
-    private Adres adres;
+    private Adres address;
 
-    @NotNull
-    private String wachtwoord;
+    private String password;
+    private String salt;
 
     @ElementCollection
     private Set<Bezorgwijze> bezorgwijzen;
 
 
-    public Gebruiker(String name,  String email, Adres adres, Set<Bezorgwijze> bezorgwijzen) {
+    public Gebruiker(String name, String email, Adres address, Set<Bezorgwijze> bezorgwijzen) {
         this.name = name;
         this.email = email;
-        this.adres = adres;
+        this.address = address;
         this.bezorgwijzen = bezorgwijzen;
+    }
+
+    @PrePersist
+    public void hashPassword() {
+        try {
+            this.salt = Password.createSalt();
+            this.password = Password.genAndHash(this.salt);
+        }
+        catch (NoSuchAlgorithmException e){
+            log.info("Password gen Error");
+        }
     }
 }

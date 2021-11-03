@@ -7,7 +7,6 @@ import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Optional;
 
 @Singleton
 public class GebruikerService implements ServiceBluePrint<Gebruiker> {

@@ -6,6 +6,7 @@ import nl.belastingdienst.gebruiker.Gebruiker;
 import nl.belastingdienst.gebruiker.GebruikerController;
 
 import javax.inject.Inject;
+import java.security.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,7 +62,7 @@ public class RegistreerGebruikerScherm {
         } else {
             adres = adresMenu();
         }
-        gebruikerController.save(new Gebruiker(naam, email, adres, (Set<Bezorgwijze>) gebruikerBezorgwijzen));
+        gebruikerController.save(new Gebruiker(naam, email, adres, gebruikerBezorgwijzen));
     }
 
     private String getValidName() {
@@ -81,6 +82,7 @@ public class RegistreerGebruikerScherm {
                 System.out.println("Geen adres opgegeven");
                 break;
             default:
+                System.out.println("Invalid input");
                 adresMenu();
                 break;
         }
@@ -100,7 +102,6 @@ public class RegistreerGebruikerScherm {
     }
 
     private Set<Bezorgwijze> getBezorgwijzeFromInput() {
-        List<Bezorgwijze> getBezorgwijzen = new ArrayList<>();
         System.out.println("Selecteer bezorgwijze: ");
         displayBezorgwijze();
         System.out.println("Typ de nummers van de bezorgwijzen die toepasbaar zijn voor jou:");
@@ -112,8 +113,8 @@ public class RegistreerGebruikerScherm {
     private Set<Bezorgwijze> getListOfBezorgwijze(List<Integer> keuzes) {
         List<Bezorgwijze> bezorgEnums = Arrays.asList(Bezorgwijze.values());
         Set<Bezorgwijze> gekozenEnums  = new HashSet<>();
-        for (int i = 0; i < keuzes.size(); i++) {
-            gekozenEnums.add(bezorgEnums.get(keuzes.get(i)));
+        for (Integer keuze : keuzes) {
+            gekozenEnums.add(bezorgEnums.get(keuze));
         }
         return gekozenEnums;
     }
