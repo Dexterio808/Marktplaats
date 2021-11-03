@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.belastingdienst.gebruiker.Gebruiker;
 import nl.belastingdienst.gebruiker.GebruikerService;
 import nl.belastingdienst.sec.Password;
+import nl.belastingdienst.util.CurrentUser;
 
 import javax.inject.Inject;
 import java.security.NoSuchAlgorithmException;
@@ -20,20 +21,20 @@ public class InlogScherm {
 
     public void run() {
 
-        boolean runInlog = true;
-        while (runInlog) {
+        boolean runInlogMenu = true;
+        while (runInlogMenu) {
             System.out.println("LoginMenu");
             System.out.println("_".repeat(15));
             System.out.println("(1) - Login");
             System.out.println("(x) - exit");
             System.out.println("Keuze: ");
-            int keuze = Integer.parseInt(sc.nextLine());
+            String keuze = sc.nextLine();
             switch (keuze) {
-                case 0:
-                    runInlog = false;
-                    System.out.println("Exit");
+                case "x":
+                    runInlogMenu = false;
+                    System.out.println("Return to HoofdMenu...");
                     break;
-                case 1:
+                case "1":
                     loginProcedure();
                     break;
                 default:
@@ -55,12 +56,12 @@ public class InlogScherm {
         Gebruiker g = gebruikerService.findByEmail(inputEMail);
         if (matchGebruikerAndPassword(g, inputPassword)){
             System.out.println("Login Success!");
+            CurrentUser.gebruiker = g;
             gebruikerScherm.run();
         } else {
             System.out.println("Login Failed!");
         }
         run();
-
     }
 
     private boolean matchGebruikerAndPassword(Gebruiker g, String inputPassword) {

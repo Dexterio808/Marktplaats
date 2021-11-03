@@ -29,6 +29,8 @@ public class Gebruiker extends AbstractEntity {
     private String password;
     private String salt;
 
+    private boolean agreedTerms;
+
     @ElementCollection
     private Set<Bezorgwijze> bezorgwijzen;
 
