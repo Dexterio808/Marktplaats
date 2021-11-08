@@ -12,6 +12,8 @@ public class GebruikerScherm {
     private Scanner sc;
     @Inject
     private RegelementenScherm regelementenScherm;
+    @Inject
+    private ArtikelAanmaken artikelAanmakenScherm;
 
     void run() {
         System.out.println("Welkom " + CurrentUser.gebruiker.getName());
@@ -26,20 +28,21 @@ public class GebruikerScherm {
     }
 
     private void runGebruikerMenu() {
-        System.out.println("GebruikerMenu:");
-        System.out.println("_".repeat(15));
-        System.out.println("(1) - Artikel Aanmaken");
-        System.out.println("(2) - Mijn Artikelen Raadplegen");
-        System.out.println("(3) - Artikel kopen");
-        System.out.println("(x) - Uitloggen");
-        System.out.println("Keuze: ");
-
         boolean runMenu = true;
         while (runMenu) {
+
+            System.out.println("GebruikerMenu:");
+            System.out.println("_".repeat(15));
+            System.out.println("(1) - Artikel Aanmaken");
+            System.out.println("(2) - Mijn Artikelen Raadplegen");
+            System.out.println("(3) - Artikel kopen");
+            System.out.println("(x) - Uitloggen");
+            System.out.println("Keuze: ");
+
             String input = sc.nextLine();
             switch (input) {
                 case "1":
-                    System.out.println("NIP");
+                    artikelAanmakenScherm.run();
                     break;
                 case "2":
                     System.out.println("NIP");

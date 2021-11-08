@@ -19,10 +19,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @AddPackages(App.class)
 @AddBeanClasses(AlternativeProducers.class)
 @EnableAlternatives(AlternativeProducers.class)
-class GebruikerServiceTest {
+class GebruikerDaoTest {
 
     @Inject
-    private GebruikerService target;
+    private GebruikerDao target;
 
     @BeforeEach
     void run(){
@@ -34,7 +34,7 @@ class GebruikerServiceTest {
 
     @Test
     void find() {
-        assertEquals("testGebruiker", target.find(1L).getName());
+        assertEquals("testGebruiker", target.findByID(1L).getName());
     }
 
     @Test
@@ -58,15 +58,15 @@ class GebruikerServiceTest {
 
     @Test
     void update() {
-        Gebruiker g =target.find(1L);
+        Gebruiker g =target.findByID(1L);
         g.setName("Aangepast");
         target.update(g);
-        assertEquals("Aangepast" ,target.find(1L).getName());
+        assertEquals("Aangepast" ,target.findByID(1L).getName());
     }
 
     @Test
     void delete() {
-        target.delete(target.find(1L));
+        target.delete(target.findByID(1L));
         List<Gebruiker> gebruikers = target.findAll();
 
         assertEquals(1 ,gebruikers.size());

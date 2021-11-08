@@ -9,30 +9,30 @@ import java.util.Optional;
 public class GebruikerController implements ControllerBP<Gebruiker> {
 
     @Inject
-    private GebruikerService gebruikerService;
+    private GebruikerDao gebruikerDAO;
 
     @Override
     public List<Gebruiker> findAll() {
-        return gebruikerService.findAll();
+        return gebruikerDAO.findAll();
     }
 
     @Override
     public Optional<Gebruiker> findById(Long id) {
-        return Optional.ofNullable(gebruikerService.find(id));
+        return Optional.ofNullable(gebruikerDAO.findByID(id));
     }
 
     @Override
     public void save(Gebruiker gebruiker) {
-        gebruikerService.save(gebruiker);
+        gebruikerDAO.save(gebruiker);
     }
 
     @Override
     public void update(Gebruiker gebruiker) {
-        gebruikerService.update(gebruiker);
+        gebruikerDAO.update(gebruiker);
     }
 
     @Override
     public void delete(Gebruiker gebruiker) {
-        gebruikerService.delete(gebruiker);
+        gebruikerDAO.delete(gebruiker);
     }
 }

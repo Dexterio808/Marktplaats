@@ -1,6 +1,6 @@
 package nl.belastingdienst.gebruiker;
 
-import nl.belastingdienst.abstractbp.ServiceBluePrint;
+import nl.belastingdienst.abstractbp.DaoBP;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -9,26 +9,26 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Singleton
-public class GebruikerService implements ServiceBluePrint<Gebruiker> {
+public class GebruikerDao implements DaoBP<Gebruiker> {
 
     @Inject
     private EntityManager em;
 
     @Override
-    public Gebruiker find(Long id) {
+    public Gebruiker findByID(Long id) {
         return em.find(Gebruiker.class, id);
+    }
+
+    @Override
+    public List<Gebruiker> findAll() {
+        TypedQuery<Gebruiker> query = em.createQuery("SELECT g FROM Gebruiker g", Gebruiker.class);
+        return query.getResultList();
     }
 
     public Gebruiker findByEmail(String email){
         var query = em.createQuery("SELECT g FROM Gebruiker g WHERE g.email = :email", Gebruiker.class)
                 .setParameter("email", email);
         return (Gebruiker) query.getSingleResult();
-    }
-
-    @Override
-    public List<Gebruiker> findAll() {
-        TypedQuery<Gebruiker> query = em.createQuery("SELECT g from Gebruiker g", Gebruiker.class);
-        return query.getResultList();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class GebruikerService implements ServiceBluePrint<Gebruiker> {
 
     @Override
     public void delete(Gebruiker gebruiker) {
-        performTransaction(()->em.remove(gebruiker));
+        performTransaction(()->em.merge(gebruiker));
     }
 
     public void performTransaction(Runnable runnable){
