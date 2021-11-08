@@ -1,9 +1,10 @@
-package nl.belastingdienst.Categorie.Dienst;
+package nl.belastingdienst.categorie.Dienst;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import nl.belastingdienst.Categorie.Categorie;
+import lombok.ToString;
+import nl.belastingdienst.categorie.Categorie;
 
 import javax.persistence.Entity;
 
@@ -11,6 +12,7 @@ import javax.persistence.Entity;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class DienstCategorie extends Categorie {
     private String dienstOmschrijving;
 

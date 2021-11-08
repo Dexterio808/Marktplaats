@@ -1,6 +1,7 @@
 package nl.belastingdienst.product.Product;
 
 import nl.belastingdienst.abstractbp.DaoBP;
+import nl.belastingdienst.gebruiker.GebruikerController;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -12,15 +13,31 @@ import java.util.List;
 public class ProductDao implements DaoBP<Product> {
     @Inject
     private EntityManager em;
+    @Inject
+    private GebruikerController gebruikerController;
 
     @Override
     public Product findByID(Long id) {
-        return em.find(Product.class, id);
+        Product product = em.find(Product.class, id);
+        if (product != null) em.detach(product);
+        return product;
     }
 
     @Override
     public List<Product> findAll() {
-        TypedQuery<Product> query = em.createQuery("SELECT p FROM Product g", Product.class);
+        TypedQuery<Product> query = em.createQuery("SELECT p FROM Product p", Product.class);
+        return query.getResultList();
+    }
+
+    public List<Product> findAllActiveProduct(Long gebruikerId) {
+        TypedQuery<Product> query = em.createQuery("SELECT p FROM Product p WHERE p.gebruiker.id = :gebruikerId AND p.verkocht = false", Product.class)
+                .setParameter("gebruikerId", gebruikerId);
+        return query.getResultList();
+    }
+
+    public List<Product> findAllSoldProduct(Long gebruikerId) {
+        TypedQuery<Product> query = em.createQuery("SELECT p FROM Product p WHERE p.gebruiker.id = :gebruikerId AND p.verkocht = true", Product.class)
+                .setParameter("gebruikerId", gebruikerId);
         return query.getResultList();
     }
 
@@ -38,6 +55,10 @@ public class ProductDao implements DaoBP<Product> {
     public void delete(Product product) {
         performTransaction(()->em.merge(product));
     }
+
+
+
+
 
     public void performTransaction(Runnable runnable){
         em.getTransaction().begin();

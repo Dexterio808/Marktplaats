@@ -1,11 +1,11 @@
 package nl.belastingdienst.scherm;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.belastingdienst.Categorie.Categorie;
-import nl.belastingdienst.Categorie.Dienst.DienstCategorie;
-import nl.belastingdienst.Categorie.Dienst.DienstCategorieController;
-import nl.belastingdienst.Categorie.Product.ProductCategorie;
-import nl.belastingdienst.Categorie.Product.ProductCategorieController;
+import nl.belastingdienst.categorie.Categorie;
+import nl.belastingdienst.categorie.Dienst.DienstCategorie;
+import nl.belastingdienst.categorie.Dienst.DienstCategorieController;
+import nl.belastingdienst.categorie.Product.ProductCategorie;
+import nl.belastingdienst.categorie.Product.ProductCategorieController;
 import nl.belastingdienst.bezorgwijze.Bezorgwijze;
 import nl.belastingdienst.product.Dienst.Dienst;
 import nl.belastingdienst.product.Dienst.DienstController;
@@ -107,7 +107,6 @@ public class ArtikelAanmaken {
 
     private Set<Bezorgwijze> inputBezorgwijze() {
         List<Bezorgwijze> allBezorgwijzen = new ArrayList<>(CurrentUser.gebruiker.getBezorgwijzen());
-        System.out.println(allBezorgwijzen);
         Set<Bezorgwijze> bezorgwijzen = new HashSet<>();
         System.out.println("Kies een bezorgwijze: ");
         int input = Integer.parseInt(sc.nextLine());
@@ -153,9 +152,9 @@ public class ArtikelAanmaken {
     private Categorie getCategorieKeuze(String type) {
         int index = Integer.parseInt(sc.nextLine());
         if (type.equals("product")) {
-            return productCC.findAll().get(index);
+            return productCC.findAll().get(index -1);
         } else {
-            return dienstCC.findAll().get(index);
+            return dienstCC.findAll().get(index -1);
         }
     }
 

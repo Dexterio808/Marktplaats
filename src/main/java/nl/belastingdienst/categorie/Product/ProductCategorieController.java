@@ -1,10 +1,9 @@
-package nl.belastingdienst.Categorie.Product;
+package nl.belastingdienst.categorie.Product;
 
 import nl.belastingdienst.abstractbp.ControllerBP;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Optional;
 
 public class ProductCategorieController implements ControllerBP<ProductCategorie> {
 
@@ -16,8 +15,8 @@ public class ProductCategorieController implements ControllerBP<ProductCategorie
     }
 
     @Override
-    public Optional<ProductCategorie> findById(Long id) {
-        return Optional.ofNullable(productCategorieDao.findByID(id));
+    public ProductCategorie findById(Long id) {
+        return productCategorieDao.findByID(id);
     }
 
     @Override

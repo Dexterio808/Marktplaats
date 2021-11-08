@@ -1,4 +1,4 @@
-package nl.belastingdienst.Categorie.Product;
+package nl.belastingdienst.categorie.Product;
 
 import nl.belastingdienst.abstractbp.DaoBP;
 

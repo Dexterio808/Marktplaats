@@ -3,7 +3,8 @@ package nl.belastingdienst.product.Dienst;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import nl.belastingdienst.Categorie.Dienst.DienstCategorie;
+import lombok.ToString;
+import nl.belastingdienst.categorie.Dienst.DienstCategorie;
 import nl.belastingdienst.gebruiker.Gebruiker;
 import nl.belastingdienst.product.Artikel;
 
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @Data
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

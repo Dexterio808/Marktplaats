@@ -12,6 +12,7 @@ import java.util.*;
 
 @Slf4j
 @Data
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

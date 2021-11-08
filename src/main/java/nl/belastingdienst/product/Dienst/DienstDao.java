@@ -45,4 +45,16 @@ public class DienstDao implements DaoBP<Dienst> {
         runnable.run();
         em.getTransaction().commit();
     }
+
+    public List<Dienst> findAllActiveDienst(long gebruikerId) {
+        TypedQuery<Dienst> query = em.createQuery("SELECT d FROM Dienst d WHERE d.gebruiker.id = :gebruikerId AND d.verkocht = false", Dienst.class)
+                .setParameter("gebruikerId", gebruikerId);
+        return query.getResultList();
+    }
+
+    public List<Dienst> findAllSoldDienst(long gebruikerId) {
+        TypedQuery<Dienst> query = em.createQuery("SELECT d FROM Dienst d WHERE d.gebruiker.id = :gebruikerId AND d.verkocht = true", Dienst.class)
+                .setParameter("gebruikerId", gebruikerId);
+        return query.getResultList();
+    }
 }

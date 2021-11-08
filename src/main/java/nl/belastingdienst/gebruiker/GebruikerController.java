@@ -4,7 +4,7 @@ import nl.belastingdienst.abstractbp.ControllerBP;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Optional;
+
 
 public class GebruikerController implements ControllerBP<Gebruiker> {
 
@@ -17,8 +17,8 @@ public class GebruikerController implements ControllerBP<Gebruiker> {
     }
 
     @Override
-    public Optional<Gebruiker> findById(Long id) {
-        return Optional.ofNullable(gebruikerDAO.findByID(id));
+    public Gebruiker findById(Long id) {
+        return gebruikerDAO.findByID(id);
     }
 
     @Override

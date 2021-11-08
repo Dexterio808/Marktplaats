@@ -4,7 +4,6 @@ import nl.belastingdienst.abstractbp.ControllerBP;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Optional;
 
 public class ProductController implements ControllerBP<Product> {
 
@@ -17,8 +16,8 @@ public class ProductController implements ControllerBP<Product> {
     }
 
     @Override
-    public Optional<Product> findById(Long id) {
-        return Optional.ofNullable(productDao.findByID(id));
+    public Product findById(Long id) {
+        return productDao.findByID(id);
     }
 
     @Override
@@ -34,5 +33,13 @@ public class ProductController implements ControllerBP<Product> {
     @Override
     public void delete(Product product) {
         productDao.delete(product);
+    }
+
+    public List<Product> findAllActiveProduct(Long gebruikerID) {
+        return productDao.findAllActiveProduct(gebruikerID);
+    }
+
+    public List<Product> findAllSoldProduct(Long gebruikerID) {
+        return productDao.findAllSoldProduct(gebruikerID);
     }
 }

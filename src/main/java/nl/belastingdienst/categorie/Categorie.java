@@ -1,4 +1,4 @@
-package nl.belastingdienst.Categorie;
+package nl.belastingdienst.categorie;
 
 import lombok.*;
 import nl.belastingdienst.abstractbp.AbstractEntity;

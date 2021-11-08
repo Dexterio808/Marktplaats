@@ -14,6 +14,8 @@ public class GebruikerScherm {
     private RegelementenScherm regelementenScherm;
     @Inject
     private ArtikelAanmaken artikelAanmakenScherm;
+    @Inject
+    private RaadpleegMijnArtikelenScherm raadpleegMijnArtikelenScherm;
 
     void run() {
         System.out.println("Welkom " + CurrentUser.gebruiker.getName());
@@ -45,7 +47,7 @@ public class GebruikerScherm {
                     artikelAanmakenScherm.run();
                     break;
                 case "2":
-                    System.out.println("NIP");
+                    raadpleegMijnArtikelenScherm.run();
                     break;
                 case "3":
                     System.out.println("NIP");

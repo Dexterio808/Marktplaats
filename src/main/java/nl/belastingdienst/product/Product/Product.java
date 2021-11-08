@@ -1,11 +1,7 @@
 package nl.belastingdienst.product.Product;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import nl.belastingdienst.Categorie.Product.ProductCategorie;
+import lombok.*;
+import nl.belastingdienst.categorie.Product.ProductCategorie;
 import nl.belastingdienst.bezorgwijze.Bezorgwijze;
 import nl.belastingdienst.gebruiker.Gebruiker;
 import nl.belastingdienst.product.Artikel;
@@ -16,7 +12,9 @@ import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
+@ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

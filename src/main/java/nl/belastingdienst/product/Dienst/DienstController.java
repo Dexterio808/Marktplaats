@@ -9,7 +9,7 @@ import java.util.Optional;
 public class DienstController implements ControllerBP<Dienst> {
 
     @Inject
-    DienstDao dienstDao;
+    private DienstDao dienstDao;
 
     @Override
     public List<Dienst> findAll() {
@@ -17,8 +17,8 @@ public class DienstController implements ControllerBP<Dienst> {
     }
 
     @Override
-    public Optional<Dienst> findById(Long id) {
-        return Optional.ofNullable(dienstDao.findByID(id));
+    public Dienst findById(Long id) {
+        return dienstDao.findByID(id);
     }
 
     @Override
@@ -35,4 +35,13 @@ public class DienstController implements ControllerBP<Dienst> {
     public void delete(Dienst dienst) {
         dienstDao.delete(dienst);
     }
+
+    public List<Dienst> findAllActiveDienst(long id) {
+        return dienstDao.findAllActiveDienst(id);
+    }
+
+    public List<Dienst> findAllSoldDienst(long id){
+        return dienstDao.findAllSoldDienst(id);
+    }
+
 }

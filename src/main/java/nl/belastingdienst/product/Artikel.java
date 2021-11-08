@@ -1,15 +1,13 @@
 package nl.belastingdienst.product;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import nl.belastingdienst.abstractbp.AbstractEntity;
 import nl.belastingdienst.gebruiker.Gebruiker;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDate;
+
 
 
 

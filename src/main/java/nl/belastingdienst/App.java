@@ -1,17 +1,14 @@
 package nl.belastingdienst;
 
 import lombok.extern.slf4j.*;
-import net.bytebuddy.asm.Advice;
-import nl.belastingdienst.Categorie.Categorie;
-import nl.belastingdienst.Categorie.Dienst.DienstCategorie;
-import nl.belastingdienst.Categorie.Dienst.DienstCategorieDao;
-import nl.belastingdienst.Categorie.Product.ProductCategorie;
-import nl.belastingdienst.Categorie.Product.ProductCategorieDao;
+import nl.belastingdienst.categorie.Dienst.DienstCategorie;
+import nl.belastingdienst.categorie.Dienst.DienstCategorieDao;
+import nl.belastingdienst.categorie.Product.ProductCategorie;
+import nl.belastingdienst.categorie.Product.ProductCategorieDao;
 import nl.belastingdienst.bezorgwijze.Bezorgwijze;
 import nl.belastingdienst.gebruiker.Gebruiker;
 import nl.belastingdienst.gebruiker.GebruikerDao;
-import nl.belastingdienst.product.Artikel;
-import nl.belastingdienst.product.Product.Product;
+import nl.belastingdienst.product.Dienst.DienstDao;
 import nl.belastingdienst.product.Product.ProductDao;
 import nl.belastingdienst.scherm.Hoofdschrem;
 import org.jboss.weld.environment.se.Weld;
@@ -19,7 +16,6 @@ import org.jboss.weld.environment.se.WeldContainer;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,6 +32,8 @@ public class App {
     private DienstCategorieDao dienstCategorieDao;
     @Inject
     private ProductDao productDao;
+    @Inject
+    private DienstDao dienstDao;
 
     public static void main(String[] args) {
         Weld weld = new Weld();
@@ -67,10 +65,7 @@ public class App {
         DienstCategorie dcat2 = new DienstCategorie("Les geven");
         dienstCategorieDao.save(dcat2);
 
-        Product product = new Product();
-        product.setNaam("testProduct");
-        product.setPostDate(LocalDate.now());
-        productDao.save(product);
+
 
         hoofdschrem.run();
     }
