@@ -16,6 +16,9 @@ import nl.belastingdienst.util.CurrentUser;
 import javax.inject.Inject;
 import java.util.*;
 
+import static nl.belastingdienst.util.Util.print;
+import static nl.belastingdienst.util.Util.readLine;
+
 @Slf4j
 public class ArtikelAanmaken {
     @Inject
@@ -39,14 +42,14 @@ public class ArtikelAanmaken {
 
         while (runMenu) {
 
-            System.out.println("GebruikerMenu:");
-            System.out.println("_".repeat(15));
-            System.out.println("(1) - Product Aanmaken.");
-            System.out.println("(2) - Dienst Aanmaken.");
-            System.out.println("(x) - Terug naar gebruiker scherm.");
-            System.out.println("Keuze: ");
+            print("GebruikerMenu:");
+            print("_".repeat(15));
+            print("(1) - Product Aanmaken.");
+            print("(2) - Dienst Aanmaken.");
+            print("(x) - Terug naar gebruiker scherm.");
+            print("Keuze: ");
 
-            String input = sc.nextLine();
+            String input = readLine();
 
             switch (input) {
                 case "1":
@@ -59,7 +62,7 @@ public class ArtikelAanmaken {
                     runMenu = false;
                     break;
                 default:
-                    System.out.println("Invalid input");
+                    print("Invalid input");
                     break;
             }
         }
@@ -71,9 +74,9 @@ public class ArtikelAanmaken {
         ProductCategorie productCategorie = null;
         double prijs;
         String omschrijving;
-        Set<Bezorgwijze> bezorgwijze = null;
+        Set<Bezorgwijze> bezorgwijze = new HashSet<>();
 
-        System.out.println("Nieuw " + type + " aanmaken:");
+        print("Nieuw " + type + " aanmaken:");
         naam = getNaam();
         if (type.equals("product")) {
             productCategorie = ((ProductCategorie) getCategorie(type));
@@ -89,17 +92,17 @@ public class ArtikelAanmaken {
 
         if (type.equals("product")) {
             productController.save(new Product(CurrentUser.gebruiker, naam, omschrijving, prijs, productCategorie, bezorgwijze));
-            System.out.println("Product opgeslagen");
+            print("Product opgeslagen");
         } else {
             dienstController.save(new Dienst(CurrentUser.gebruiker, naam, omschrijving, prijs, dienstCategorie));
-            System.out.println("Dienst opgeslagen");
+            print("Dienst opgeslagen");
         }
 
 
     }
 
     private Set<Bezorgwijze> getBezorgwijze() {
-        System.out.println("Bezorgwijze: ");
+        print("Bezorgwijze: ");
         displayBezorgwijze();
         return inputBezorgwijze();
 
@@ -108,8 +111,8 @@ public class ArtikelAanmaken {
     private Set<Bezorgwijze> inputBezorgwijze() {
         List<Bezorgwijze> allBezorgwijzen = new ArrayList<>(CurrentUser.gebruiker.getBezorgwijzen());
         Set<Bezorgwijze> bezorgwijzen = new HashSet<>();
-        System.out.println("Kies een bezorgwijze: ");
-        int input = Integer.parseInt(sc.nextLine());
+        print("Kies een bezorgwijze: ");
+        int input = Integer.parseInt(readLine());
         bezorgwijzen.add(allBezorgwijzen.get(input - 1));
         return bezorgwijzen;
 
@@ -118,18 +121,18 @@ public class ArtikelAanmaken {
     private void displayBezorgwijze() {
         List<Bezorgwijze> allBezorgwijzen = new ArrayList<>(CurrentUser.gebruiker.getBezorgwijzen());
         for (int i = 0; i < allBezorgwijzen.size(); i++) {
-            System.out.println((i + 1) + ". " + allBezorgwijzen.get(i));
+            print((i + 1) + ". " + allBezorgwijzen.get(i));
         }
     }
 
     private String getOmschrijving() {
-        System.out.println("Omschrijving Artikel:");
-        return sc.nextLine();
+        print("Omschrijving Artikel:");
+        return readLine();
     }
 
     private double getPrijs() {
-        System.out.println("Prijs: ");
-        double input = Double.parseDouble(sc.nextLine());
+        print("Prijs: ");
+        double input = Double.parseDouble(readLine());
         if (input < 0d) {
             getPrijs();
         }
@@ -137,20 +140,20 @@ public class ArtikelAanmaken {
     }
 
     private Categorie getCategorie(String type) {
-        System.out.println("Categoriën:");
+        print("Categoriën:");
         if (type.equals("product")) {
             displayCategorien(type);
-            System.out.println("Kies een categorie:");
+            print("Kies een categorie:");
             return getCategorieKeuze(type);
         } else {
             displayCategorien(type);
-            System.out.println("Kies een categorie:");
+            print("Kies een categorie:");
             return getCategorieKeuze(type);
         }
     }
 
     private Categorie getCategorieKeuze(String type) {
-        int index = Integer.parseInt(sc.nextLine());
+        int index = Integer.parseInt(readLine());
         if (type.equals("product")) {
             return productCC.findAll().get(index -1);
         } else {
@@ -165,18 +168,18 @@ public class ArtikelAanmaken {
         if (type.equals("product")) {
 
             for (int i = 0; i < pCategorien.size(); i++) {
-                System.out.println((i + 1) + ". " + pCategorien.get(i).getProductOmschrijving());
+                print((i + 1) + ". " + pCategorien.get(i).getProductOmschrijving());
             }
         } else {
             for (int i = 0; i < dCategorien.size(); i++) {
-                System.out.println((i + 1) + ". " + dCategorien.get(i).getDienstOmschrijving());
+                print((i + 1) + ". " + dCategorien.get(i).getDienstOmschrijving());
             }
         }
     }
 
     private String getNaam() {
-        System.out.println("Naam Artikel:");
-        String input = sc.nextLine();
+        print("Naam Artikel:");
+        String input = readLine();
         if (input == null) {
             getNaam();
         }

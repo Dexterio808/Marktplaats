@@ -10,9 +10,11 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static nl.belastingdienst.util.Util.print;
+import static nl.belastingdienst.util.Util.readLine;
+
 public class RegistreerGebruikerScherm {
 
-    Scanner scanner = new Scanner(System.in);
     Pattern mailPattern = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\." +
             "[a-zA-Z0-9_+&*-]+)*@" +
             "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
@@ -24,19 +26,22 @@ public class RegistreerGebruikerScherm {
     public void run() {
         boolean runRGS = true;
         while (runRGS) {
-            System.out.println("Registreer gebruiker Menu:");
-            System.out.println("_".repeat(15));
-            System.out.println("(1) - Nieuwe gebruiker registreren");
-            System.out.println("(x) - Terug naar hoofdmenu");
-            System.out.println("Keuze: ");
+            print("Registreer gebruiker Menu:");
+            print("_".repeat(15));
+            print("(1) - Nieuwe gebruiker registreren");
+            print("(x) - Terug naar hoofdmenu");
+            print("Keuze: ");
 
-            int keuze = Integer.parseInt(scanner.nextLine());
+            String keuze = readLine();
             switch (keuze) {
-                case 0:
+                case "x":
                     runRGS = false;
                     break;
-                case 1:
+                case "1":
                     registratieProcedure();
+                    break;
+                default:
+                    print("InvalidInput");
                     break;
             }
         }
@@ -48,11 +53,11 @@ public class RegistreerGebruikerScherm {
         Set<Bezorgwijze> gebruikerBezorgwijzen;
         Adres adres;
 
-        System.out.println("Nieuwe Gebruiker aanmaken");
+        print("Nieuwe Gebruiker aanmaken");
         naam = getValidName();
-        System.out.println();
+        print("");
         email = getValidEmail();
-        System.out.println();
+        print("");
         gebruikerBezorgwijzen = getBezorgwijzeFromInput();
 
         if (gebruikerBezorgwijzen.contains(Bezorgwijze.THUIS)) {
@@ -64,23 +69,23 @@ public class RegistreerGebruikerScherm {
     }
 
      String getValidName() {
-        System.out.println("naam: ");
-        return scanner.nextLine();
+        print("naam: ");
+        return readLine();
     }
 
      Adres adresMenu() {
         Adres adres = null;
-        System.out.println("Adres opgeven?");
-        System.out.println("(y)yes/(n)no");
-        switch (scanner.nextLine().toLowerCase()) {
+        print("Adres opgeven?");
+        print("(y)yes/(n)no");
+        switch (readLine().toLowerCase()) {
             case "y":
                 adres = getAdresFromUser();
                 break;
             case "n":
-                System.out.println("Geen adres opgegeven");
+                print("Geen adres opgegeven");
                 break;
             default:
-                System.out.println("Invalid input");
+                print("Invalid input");
                 adresMenu();
                 break;
         }
@@ -88,23 +93,23 @@ public class RegistreerGebruikerScherm {
     }
 
      Adres getAdresFromUser() {
-        System.out.println("Straat: ");
-        String straat = scanner.nextLine();
-        System.out.println("Huisnummer: ");
-        String huisnummer = scanner.nextLine();
-        System.out.println("Postcode: ");
-        String postcode = scanner.nextLine();
-        System.out.println("Stad: ");
-        String stad = scanner.nextLine();
+        print("Straat: ");
+        String straat = readLine();
+        print("Huisnummer: ");
+        String huisnummer = readLine();
+        print("Postcode: ");
+        String postcode = readLine();
+        print("Stad: ");
+        String stad = readLine();
         return new Adres(straat, huisnummer, postcode, stad);
     }
 
      Set<Bezorgwijze> getBezorgwijzeFromInput() {
-        System.out.println("Selecteer bezorgwijze: ");
+        print("Selecteer bezorgwijze: ");
         displayBezorgwijze();
-        System.out.println("Typ de nummers van de bezorgwijzen die toepasbaar zijn voor jou:");
+        print("Typ de nummers van de bezorgwijzen die toepasbaar zijn voor jou:");
         System.out.print("Typ 1,2,etc: ");
-        String keuze = scanner.nextLine();
+        String keuze = readLine();
         return getListOfBezorgwijze(extractBezorgKeuzeIndexes(keuze));
     }
 
@@ -120,7 +125,7 @@ public class RegistreerGebruikerScherm {
      void displayBezorgwijze() {
         List<Bezorgwijze> displayEnums = Arrays.asList(Bezorgwijze.values());
         for (int i = 0; i < displayEnums.size(); i++) {
-            System.out.println((i + 1) + ". " + displayEnums.get(i));
+            print((i + 1) + ". " + displayEnums.get(i));
         }
     }
 
@@ -134,12 +139,12 @@ public class RegistreerGebruikerScherm {
     }
 
      String getValidEmail() {
-        System.out.println("Email: ");
-        String mail = scanner.nextLine();
+        print("Email: ");
+        String mail = readLine();
         Matcher mat = mailPattern.matcher(mail);
         if (!mat.matches()) {
             getValidEmail();
-            System.out.println(mail + " is een invalide email");
+            print(mail + " is een invalide email");
         }
         return mail;
     }

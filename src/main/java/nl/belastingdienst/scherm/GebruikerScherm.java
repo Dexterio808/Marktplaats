@@ -6,6 +6,9 @@ import nl.belastingdienst.util.CurrentUser;
 import javax.inject.Inject;
 import java.util.Scanner;
 
+import static nl.belastingdienst.util.Util.print;
+import static nl.belastingdienst.util.Util.readLine;
+
 @Slf4j
 public class GebruikerScherm {
     @Inject
@@ -18,7 +21,7 @@ public class GebruikerScherm {
     private RaadpleegMijnArtikelenScherm raadpleegMijnArtikelenScherm;
 
     void run() {
-        System.out.println("Welkom " + CurrentUser.gebruiker.getName());
+        print("Welkom " + CurrentUser.gebruiker.getName());
         if (!CurrentUser.gebruiker.isAgreedTerms()) {
             regelementenScherm.run();
             if (CurrentUser.gebruiker.isAgreedTerms()) {
@@ -33,15 +36,15 @@ public class GebruikerScherm {
         boolean runMenu = true;
         while (runMenu) {
 
-            System.out.println("GebruikerMenu:");
-            System.out.println("_".repeat(15));
-            System.out.println("(1) - Artikel Aanmaken");
-            System.out.println("(2) - Mijn Artikelen Raadplegen");
-            System.out.println("(3) - Artikel kopen");
-            System.out.println("(x) - Uitloggen");
-            System.out.println("Keuze: ");
+            print("GebruikerMenu:");
+            print("_".repeat(15));
+            print("(1) - Artikel Aanmaken");
+            print("(2) - Mijn Artikelen Raadplegen");
+            print("(3) - Artikel kopen");
+            print("(x) - Uitloggen");
+            print("Keuze: ");
 
-            String input = sc.nextLine();
+            String input = readLine();
             switch (input) {
                 case "1":
                     artikelAanmakenScherm.run();
@@ -50,13 +53,13 @@ public class GebruikerScherm {
                     raadpleegMijnArtikelenScherm.run();
                     break;
                 case "3":
-                    System.out.println("NIP");
+                    print("NIP");
                     break;
                 case "x":
                     runMenu = false;
                     break;
                 default:
-                    System.out.println("Invalid input");
+                    print("Invalid input");
                     break;
             }
         }

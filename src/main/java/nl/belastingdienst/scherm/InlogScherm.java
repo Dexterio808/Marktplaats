@@ -10,6 +10,9 @@ import javax.inject.Inject;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
+import static nl.belastingdienst.util.Util.print;
+import static nl.belastingdienst.util.Util.readLine;
+
 @Slf4j
 public class InlogScherm {
     @Inject
@@ -23,22 +26,22 @@ public class InlogScherm {
 
         boolean runInlogMenu = true;
         while (runInlogMenu) {
-            System.out.println("LoginMenu");
-            System.out.println("_".repeat(15));
-            System.out.println("(1) - Login");
-            System.out.println("(x) - exit");
-            System.out.println("Keuze: ");
-            String keuze = sc.nextLine();
+            print("LoginMenu");
+            print("_".repeat(15));
+            print("(1) - Login");
+            print("(x) - exit");
+            print("Keuze: ");
+            String keuze = readLine();
             switch (keuze) {
                 case "x":
                     runInlogMenu = false;
-                    System.out.println("Return to HoofdMenu...");
+                    print("Return to HoofdMenu...");
                     break;
                 case "1":
                     loginProcedure();
                     break;
                 default:
-                    System.out.println("Invalid input");
+                    print("Invalid input");
                     break;
             }
         }
@@ -48,18 +51,20 @@ public class InlogScherm {
         String inputEMail;
         String inputPassword;
 
-        System.out.println("Log in met jouw gegevens.");
-        System.out.println("Email: ");
-        inputEMail = sc.nextLine();
-        System.out.println("Password: ");
-        inputPassword = sc.nextLine();
+        print("Log in met jouw gegevens.");
+        print("Email: ");
+        inputEMail = readLine();
+        print("Password: ");
+        inputPassword  = readLine();
+
         Gebruiker g = gebruikerDAO.findByEmail(inputEMail);
-        if (matchGebruikerAndPassword(g, inputPassword) ||inputEMail.equals("dev@mail.com")){
-            System.out.println("Login Success!");
+
+        if (matchGebruikerAndPassword(g, inputPassword) ||inputEMail.equals("dev@mail.com")){//dev@mail.com for testing purposes
+            print("Login Success!");
             CurrentUser.gebruiker = g;
             gebruikerScherm.run();
         } else {
-            System.out.println("Login Failed!");
+            print("Login Failed!");
         }
         run();
     }

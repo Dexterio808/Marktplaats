@@ -3,6 +3,8 @@ package nl.belastingdienst.scherm;
 import javax.inject.Inject;
 import java.util.Scanner;
 
+import static nl.belastingdienst.util.Util.*;
+
 public class Hoofdschrem {
     @Inject
     private InlogScherm inlogS;
@@ -15,16 +17,14 @@ public class Hoofdschrem {
 
         boolean runApp = true;
         while (runApp) {
-            System.out.println("Welkom bij de BD Marktplaats:");
-            System.out.println("HoofdMenu:");
-            System.out.println("_".repeat(15));
-            System.out.println("(1) - Inloggen");
-            System.out.println("(2) - Gebruiker registreren");
-            System.out.println("(x) - Afsluiten");
-            System.out.println("Keuze:");
-            String keuze = sc.nextLine();
-            System.out.println("");
-            switch (keuze) {
+            print("Welkom bij de BD Marktplaats:");
+            print("HoofdMenu:");
+            print("_".repeat(15));
+            print("(1) - Inloggen");
+            print("(2) - Gebruiker registreren");
+            print("(x) - Afsluiten");
+
+            switch (prompt("Keuze: ")) {
                 case "x":
                     runApp = false;
                     break;
