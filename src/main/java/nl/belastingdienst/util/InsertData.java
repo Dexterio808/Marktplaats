@@ -33,6 +33,9 @@ public class InsertData {
         Gebruiker g = Gebruiker.builder().name("dev").email("dev@mail.com").bezorgwijzen(bezorgwijzeSet).agreedTerms(true).build();
         gebruikerDAO.save(g);
 
+        Gebruiker g2 = Gebruiker.builder().name("dev2").email("dev2@mail.com").bezorgwijzen(bezorgwijzeSet).agreedTerms(false).build();
+        gebruikerDAO.save(g2);
+
         ProductCategorie pcat = new ProductCategorie("Electronica");
         productCategorieDao.save(pcat);
 

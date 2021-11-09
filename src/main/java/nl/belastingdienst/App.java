@@ -33,7 +33,7 @@ public class App {
 
     void start() {
         log.info("Starting App");
-        boolean runBrowserApp = true;
+        boolean runBrowserApp = true; ///TURN FALSE FOR TEST
         if (runBrowserApp) JWT.init();
         Util.scanner = new Scanner(System.in);
         insertData.run();

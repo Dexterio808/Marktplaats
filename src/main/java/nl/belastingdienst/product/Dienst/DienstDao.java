@@ -37,7 +37,7 @@ public class DienstDao implements DaoBP<Dienst> {
 
     @Override
     public void delete(Dienst dienst) {
-        performTransaction(()->em.merge(dienst));
+        performTransaction(()->em.remove(dienst));
     }
 
     public void performTransaction(Runnable runnable){

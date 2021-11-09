@@ -94,11 +94,11 @@ public class RaadpleegMijnArtikelenScherm {
                 print("ID: " + product.getId() + " Naam product: " + product.getNaam());
             }
         } else {
-            print("No products found");
+            print("No product found");
         }
 
         print("Diensten: ");
-        if (products.size() > 0) {
+        if (diensten.size() > 0) {
             for (Dienst dienst : diensten) {
                 print("ID: " + dienst.getId() + " Naam dienst: " + dienst.getNaam());
             }
@@ -168,6 +168,7 @@ public class RaadpleegMijnArtikelenScherm {
             switch (readLine()){
                 case "1":
                     productController.delete(p);
+                    print("Artikel verijderd");
                     break;
                 case "x":
                     runDeleteMenu = false;
@@ -189,6 +190,7 @@ public class RaadpleegMijnArtikelenScherm {
             switch (readLine()){
                 case "1":
                     dienstController.delete(d);
+                    print("Artikel verijderd");
                     break;
                 case "x":
                     runDeleteMenu = false;

@@ -59,7 +59,7 @@ public class InlogScherm {
 
         Gebruiker g = gebruikerDAO.findByEmail(inputEMail);
 
-        if (matchGebruikerAndPassword(g, inputPassword) ||inputEMail.equals("dev@mail.com")){//dev@mail.com for testing purposes
+        if (matchGebruikerAndPassword(g, inputPassword) /*|| testAccount(inputEMail)*/){//dev@mail.com for testing purposes
             print("Login Success!");
             CurrentUser.gebruiker = g;
             gebruikerScherm.run();
@@ -67,6 +67,11 @@ public class InlogScherm {
             print("Login Failed!");
         }
         run();
+    }
+
+    private boolean testAccount(String inputEMail) {
+        return (inputEMail.equals("dev@mail.com")||
+                inputEMail.equals("dev2@mail.com"));
     }
 
     private boolean matchGebruikerAndPassword(Gebruiker g, String inputPassword) {

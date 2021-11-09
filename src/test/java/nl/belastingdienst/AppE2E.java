@@ -52,6 +52,13 @@ public class AppE2E {
     }
 
     @Test
+    void instemmenRegelement(){
+        setCommands("1", "1", "dev2@mail.com", "", "2", "x", "1", "j",
+                    "x", "x", "x","x");
+        App.main(new String[]{""});
+    }
+
+    @Test
     void gebruikerHandelingen(){
 
         setCommands("1", "1", "dev@mail.com", "", //Inloggen
